@@ -44,7 +44,7 @@ class TacheController extends Controller
         return redirect()->route('admin.taches.index');
     }
 
-    public function edit(Tache $tache)
+    public function edit(Tache $tache ,$id)
     {
         abort_if(Gate::denies('tache_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -52,7 +52,8 @@ class TacheController extends Controller
 
         $projects = Project::pluck('nom', 'id');
 
-        $tache->load('users', 'projects');
+        $tache=Tache::find($id);
+        
 
         return view('admin.taches.edit', compact('projects', 'tache', 'users'));
     }
